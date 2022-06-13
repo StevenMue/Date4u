@@ -6,8 +6,33 @@
     <title>Title</title>
 </head>
 <body>
+<div th:if="${change}==true" class="alert alert-success">
+    Profile updated!
+</div>
+<!-- TODO make it interational or german-->
+<div th:block th:if="${change}==false">
+    <div th:if="${#lists.contains(errorFields, 'nickname')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a text in NICKNAME. This field can not be empty'">
+    </div>
+    <div th:if="${#lists.contains(errorFields, 'birthdate')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a valid GEBURTSTAG in form of dd-mm-yy. This field can not be empty'">
+    </div>
+    <div th:if="${#lists.contains(errorFields, 'hornlength')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a valid number >=0 in HORNLÄNGE. This field can not be empty'">
+    </div>
+    <div th:if="${#lists.contains(errorFields, 'gender')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a valid gender number (0=divers, 1=male, 2=female) in GESCHLECHT. This field can not be empty'">
+    </div>
+    <div th:if="${#lists.contains(errorFields, 'attrectedTo')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a valid number (0=divers, 1=male, 2=female) in ATTRACTED TO. This field can not be empty'">
+    </div>
+    <div th:if="${#lists.contains(errorFields, 'discription')}" class="alert alert-error"
+         data-th-text="'Profile update error: '+'You must enter a text in BESCHREIBUNG. This field can not be empty'">
+    </div>
+</div>
 <form class="p-3" data-th-object="${profile}" data-th-action="@{/saveProfile}" method="post">
     <input type="text" data-th-field="*{id}" hidden>
+
     <div class="mb-3">
         <label for="nicknameInput" class="form-label">Nickname</label>
         <input type="text" data-th-field="*{nickname}" id="nicknameInput"
@@ -44,7 +69,7 @@
                class="form-control">
     </div>
 
-    <button type="submit" class="btn btn-primary">Speichern</button>
+    <button type="submit" class="btn btn-primary">Speichern</button>    <a class="text-center" href="index">Go Home</a>
 </form>
 </body>
 </html>

@@ -11,9 +11,13 @@
             <a class="nav-item nav-link" href="index">Home</a>
             <a class="nav-link nav-item" href="profile">Profile</a>
             <a class="nav-link nav-item" href="search">Search</a>
-            <a class="nav-link nav-item" href="login">Login</a>
+            <a th:if="anonymousUser == ${loggedIn}" class="nav-link nav-item" href="login">Login</a>
+            <a th:if="anonymousUser != ${loggedIn}" class="nav-link nav-item" href="javascript: document.logoutForm.submit()">Logout</a><!-- Change if user is logged in -->
         </div></div>
     </nav>
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
     <div class="jumbotron">
         <h1 class="display-4">Willkommen</h1>
         <p data-th-text="|Es gibt ${totalProfiles} Profile in der Datenbank.|">1234</p>

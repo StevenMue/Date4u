@@ -10,23 +10,21 @@ import com.tutego.date4u.repository.enities.Unicorn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.Port;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
 import java.security.Principal;
-import java.security.Timestamp;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,6 +42,7 @@ public class Date4uWebController {
     public String indexPage(Model model) {
         log.info(Long.toString(profiles.count()));
         model.addAttribute("totalProfiles", profiles.count());
+        model.addAttribute("loggedIn", SecurityContextHolder.getContext().getAuthentication().getName());
         return "index";
     }
 
@@ -54,6 +53,7 @@ public class Date4uWebController {
         String principalName = authentication.getName();
         Unicorn user = unicornRepository.findUnicornsByEmail(principalName);
         if (user.getProfile() != null) {
+
             return "redirect:/profile/" + user.getProfile().getId();
         } else {
             return "redirect:/profile/newProfile";
@@ -91,7 +91,7 @@ public class Date4uWebController {
     }
 
     @RequestMapping("/profile/{id}")
-    public String profilePage(@PathVariable long id, Model model) {
+    public String profilePage(@PathVariable long id, Model model, @RequestParam(value = "updateSuccess", required = false) String updateSuccess, @RequestParam(value="errorFields", required = false) List<String> errorFields) {
         Optional<Profile> maybeProfile = profiles.findById(id);
         if (!maybeProfile.isPresent()) {
             log.error("Profile not present");
@@ -105,7 +105,15 @@ public class Date4uWebController {
             log.error("Profile not allowed to view"); //TODO change that if its not the same id -> read only
             return "redirect:/index";
         }
-
+        if(updateSuccess!=null) {
+            if (updateSuccess.equals("true")) {
+                model.addAttribute("change", true);
+            }
+            if (updateSuccess.equals("error")) {
+                model.addAttribute("change", false);
+                model.addAttribute("errorFields", errorFields);
+            }
+        }
         Profile profile = maybeProfile.get();
         //public ProfileFormData(Long id, String nickname, LocalDate birthdate, short hornlength, byte gender, Byte attractedToGender, String description, LocalDateTime lastseen) {
         model.addAttribute("profile",
@@ -121,7 +129,7 @@ public class Date4uWebController {
         return "profile";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login*")
     public String loginPage(Model model) {
         Unicorn unicorn = new Unicorn();
         //public UnicornFormData(Long id, String email, String password)
@@ -131,6 +139,13 @@ public class Date4uWebController {
                         unicorn.getPassword()
                 ));
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logoutPage(Model model) {
+        ;
+        //public UnicornFormData(Long id, String email, String password)
+        return "logout";
     }
 
     @PostMapping("/regAction")
@@ -161,31 +176,49 @@ public class Date4uWebController {
 
     @PostMapping("/saveProfile")
     @Transactional
-    public String saveProfile(@ModelAttribute ProfileFormData profile) {
-
-        short hornlength =  (short)profile.getHornlength();
-        byte gender = (byte) profile.getGender();
-        Byte attractedTo;
-        switch (profile.getAttractedToGender()){
-            case 0: attractedTo=Byte.valueOf("0");
-            case 1: attractedTo=Byte.valueOf("1");
-            case 2: attractedTo=Byte.valueOf("2");
-            default: attractedTo=null;
-        }
+    public String saveProfile(@Valid @ModelAttribute ProfileFormData profile, BindingResult bindingResult) {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         String principalName = authentication.getName();
         Unicorn user = unicornRepository.findUnicornsByEmail(principalName);
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorFields=new StringBuilder();
+            errorFields.append("&errorFields=");
+            for (Object object : bindingResult.getAllErrors()) {
+                if (object instanceof FieldError fieldError) {
+                    errorFields.append(((FieldError) object).getField()).append(",");
+                }
+            }
+            errorFields.deleteCharAt(errorFields.lastIndexOf(","));
+            return "redirect:/profile/" + user.getProfile().getId() + "?updateSuccess=error"+errorFields;
+        }
+        short hornlength = (short) profile.getHornlength();
+        byte gender = (byte) profile.getGender();
+        Byte attractedTo;
+        if (profile.getAttractedToGender() == null) {
+            attractedTo = null;
+        } else {
+            attractedTo = switch (profile.getAttractedToGender()) {
+                case 0 -> Byte.valueOf("0");
+                case 1 -> Byte.valueOf("1");
+                case 2 -> Byte.valueOf("2");
+                default -> null;
+            };
+        }
         if (user.getProfile() != null) {
             profiles.updateProfile(user.getProfile().getId(), profile.getNickname(), profile.getBirthdate(), hornlength,
                     gender, attractedTo, profile.getDescription(), profile.getLastseen());
             log.info(profile.toString());
-            return "redirect:/profile/" + user.getProfile().getId();
-        }else{
-            return null; //TODO better error
+            return "redirect:/profile/" + user.getProfile().getId() + "?updateSuccess=true";
+        } else {
+            return "redirect:/index"; //TODO if user is not logged in make a suitable error page appear
         }
     }
 
+    @GetMapping("/profile/index")
+    public String profileBackToIndex() {
+        return "redirect:/index";
+    }
 
     //TODO With this i can access the user
     // http://localhost:8080/authentication
