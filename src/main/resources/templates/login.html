@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="background-color: black">
+        <h1 style="text-align: center; height: 13rem; position: relative; top: 5rem">D4U</h1>
+    </div>
+    <div class="row">
+        <h2 style="text-align: center; height: 5rem; position: relative; top: 3rem">Login</h2>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <form name="f" th:action="@{/login}" method="post">
+                <fieldset>
+                    <legend>Please Login</legend>
+                    <div th:if="${param.error}" class="alert alert-error">
+                        Invalid email and password
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        You habe been logged out.
+                    </div>
+                    <div class="mb-3">
+                        <label for="username">Email</label>
+                        <input type="text" id="username" name="username" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"/>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary position-relative start-50 translate-middle">
+                            Weiter
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <h2 style="text-align: center; height: 5rem; position: relative; top: 3rem">Registrierung</h2>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div th:if="${param.error}" class="alert alert-error">
+                Email exits already.
+            </div>
+            <form class="p-3" data-th-object="${unicorn}" data-th-action="@{/regAction}" method="post">
+                <input type="text" data-th-field="*{id}" hidden/>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="text" data-th-field="*{email}" id="emailInput"
+                           class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Password</label>
+                    <input type="password" data-th-field="*{password}" id="passwordInput"
+                           class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary position-relative start-50 translate-middle">Weiter
+                </button>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+</html>

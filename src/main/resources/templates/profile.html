@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+<form class="p-3" data-th-object="${profile}" data-th-action="@{/saveProfile}" method="post">
+    <input type="text" data-th-field="*{id}" hidden>
+    <div class="mb-3">
+        <label for="nicknameInput" class="form-label">Nickname</label>
+        <input type="text" data-th-field="*{nickname}" id="nicknameInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="birthdateInput" class="form-label">Geburtsdatum</label>
+        <input type="text" data-th-field="*{birthdate}" id="birthdateInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="hornlengthInput" class="form-label">Hornlänge</label>
+        <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="genderInput" class="form-label">Geschlecht</label>
+        <input type="text" data-th-field="*{gender}" id="genderInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="attractedToGenderInput" class="form-label">Attracted to</label>
+        <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="descriptionInput" class="form-label">Beschreibung</label>
+        <input type="text" data-th-field="*{description}" id="descriptionInput"
+               class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="lastseenInput" class="form-label">Last Seen</label>
+        <input type="text" data-th-field="*{lastseen}" id="lastseenInput" readonly
+               class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Speichern</button>
+</form>
+</body>
+</html>
