@@ -1,0 +1,18 @@
+<div id="resultArea">
+    <div class="container border border-4" style=" display: flex; justify-content: center; flex-wrap: wrap;">
+        <div data-th-each="uni,iterationStatus : ${profile}">
+            <div class="profile item rounded p-2 mx-4 my-4 bg-danger">
+                <form th:action="@{'/profile/'+${uni.id}}">
+                    <input type="image" style="width:128px; height: 128px"
+                           th:src="@{'/user(id='+${uni.id}+')/profilePicture'}"
+                           alt="profile-picture"/>
+                    <p data-th-text="'Nick: '+${uni.nickname}">Nickname</p>
+                    <p data-th-text="'Alter: '+${uni.birthdate}">Birthdate</p>
+                    <p data-th-text="'Hornlänge: '+${uni.hornlength}">Hornlänge</p>
+                </form>
+            </div>
+            <div class="break" th:if="${iterationStatus.count} % 4 ==0 ? true : false"
+                 style="flex-basis: 100%;height: 0;"></div>
+        </div>
+    </div>
+</div>

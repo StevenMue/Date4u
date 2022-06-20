@@ -1,5 +1,7 @@
 package com.tutego.date4u.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +18,7 @@ public class ProfileFormData {
     private String nickname;
 
     @NotNull(message = "Birthdate cant be empty or null")
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private LocalDate birthdate;
 
     @NotNull(message = "Hornlength cant be empty or null")

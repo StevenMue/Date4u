@@ -1,11 +1,14 @@
 package com.tutego.date4u.repository.enities;
 
+
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Access( AccessType.FIELD )
@@ -33,13 +36,45 @@ public class Profile {
     @OneToMany(
             mappedBy = "profile",
             fetch = FetchType.EAGER )
-    private List<Photo> photos;
-    public List<Photo> getPhotos() {
-        return photos;
-    }
+    private Set<Photo> photos;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "likes",
+            joinColumns = @JoinColumn(name = "liker_fk"),
+            inverseJoinColumns = @JoinColumn(name = "likee_fk")
+    )
+    Set<Profile> profilesILike;
+    @ManyToMany
+    @JoinTable(name = "likes",
+            joinColumns = @JoinColumn(name = "likee_fk"),
+            inverseJoinColumns = @JoinColumn(name = "liker_fk")
+    )
+    Set<Profile> profilesThatLikeMe;
     public Profile add( Photo photo ) {
         photos.add( photo );
         return this;
+    }
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
+
+    public Photo getProfilePhoto() {
+        for (Photo photo: photos) {
+            if(photo.isProfilePhoto){
+                return photo;
+            }
+        }
+        return null;
+    }
+    public Photo getPhoto(String name){
+        for (Photo photo: photos) {
+            if(photo.name.equals(name)){
+                return photo;
+            }
+        }
+        return null;
     }
     public Unicorn getUnicorn() {
         return unicorn;
@@ -124,7 +159,23 @@ public class Profile {
         this.lastseen = lastseen;
     }
 
-    @Override public boolean equals( Object o ) {
+    public Set<Profile> getProfilesILike() {
+        return profilesILike;
+    }
+
+    public void setProfilesILike(Set<Profile> profilesILike) {
+        this.profilesILike = profilesILike;
+    }
+
+    public Set<Profile> getProfilesThatLikeMe() {
+        return profilesThatLikeMe;
+    }
+
+    public void setProfilesThatLikeMe(Set<Profile> profilesThatLikeMe) {
+        this.profilesThatLikeMe = profilesThatLikeMe;
+    }
+
+    @Override public boolean equals(Object o ) {
         return o instanceof Profile profile
                 && nickname.equals( profile.nickname );
     }

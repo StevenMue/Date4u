@@ -1,6 +1,10 @@
 package com.tutego.date4u.repository.enities;
 
+
+
+
 import javax.persistence.*;
+
 
 @Entity
 @Access( AccessType.FIELD )

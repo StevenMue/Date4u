@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
 <body>
+<div class="p-5">
+    <h1 class="text-center rounded border" data-th-text="'Profile of '+ ${profileName}"></h1>
+</div>
+<div class="d-flex justify-content-center">
+    <img class="img-fluid img-thumbnail" th:src="@{'/user(id='+${id}+')/profilePicture'}" alt="Profile picture"/>
+</div>
+<div class="d-flex justify-content-center my-3">
+    <form th:action="@{'/user(id='+${id}+')/like'}">
+<input type="image" style="width:64px; height: 64px" class="d-flex justify-content-center"
+       th:src="@{'/img/'+${liked}}"
+       alt="like" th:if="${otherProfile}==true"/>
+    </form>
+</div>
 <div th:if="${change}==true" class="alert alert-success">
     Profile updated!
 </div>
@@ -30,46 +46,78 @@
          data-th-text="'Profile update error: '+'You must enter a text in BESCHREIBUNG. This field can not be empty'">
     </div>
 </div>
-<form class="p-3" data-th-object="${profile}" data-th-action="@{/saveProfile}" method="post">
+<form class="p-3" data-th-object="${profile}" data-th-action="@{/saveProfile}" method="post" style=" display: flex; justify-content: center; flex-wrap: wrap;">
     <input type="text" data-th-field="*{id}" hidden>
 
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="nicknameInput" class="form-label">Nickname</label>
-        <input type="text" data-th-field="*{nickname}" id="nicknameInput"
+        <input type="text" data-th-field="*{nickname}" id="nicknameInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="birthdateInput" class="form-label">Geburtsdatum</label>
-        <input type="text" data-th-field="*{birthdate}" id="birthdateInput"
+        <input type="text" data-th-field="*{birthdate}" id="birthdateInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="hornlengthInput" class="form-label">Hornlänge</label>
-        <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
+        <input type="text" data-th-field="*{hornlength}" id="hornlengthInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="genderInput" class="form-label">Geschlecht</label>
-        <input type="text" data-th-field="*{gender}" id="genderInput"
+        <input type="text" data-th-field="*{gender}" id="genderInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="attractedToGenderInput" class="form-label">Attracted to</label>
-        <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
+        <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="descriptionInput" class="form-label">Beschreibung</label>
-        <input type="text" data-th-field="*{description}" id="descriptionInput"
+        <input type="text" data-th-field="*{description}" id="descriptionInput" th:readonly="${otherProfile}==true"
                class="form-control">
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-5">
         <label for="lastseenInput" class="form-label">Last Seen</label>
         <input type="text" data-th-field="*{lastseen}" id="lastseenInput" readonly
                class="form-control">
     </div>
-
-    <button type="submit" class="btn btn-primary">Speichern</button>    <a class="text-center" href="index">Go Home</a>
+    <div class="break"
+         style="flex-basis: 100%;height: 0;"></div>
+    </div>
+    <div class="">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner img-fluid img-thumbnail" style=" width:25rem; !important;">
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center">
+                    <img class="rounded" th:src="@{'/user(id='+${id}+')/profilePicture'}"
+                         alt="first photo: profile photo">
+                </div>
+                </div>
+                <div class="carousel-item" th:each="picture: ${allPictures}">
+                    <div class="d-flex justify-content-center">
+                    <img  class="rounded" th:src="@{'/user(id='+${id}+')/img/'+${picture.name}}" alt="Other picture">
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+            </a>
+        </div>
+    </div>
+    <div class="break"
+         style="flex-basis: 100%;height: 0;"></div>
+    </div>
+    <button th:if="${otherProfile}==false" type="submit" class=" d-grid gap-2 col-2 mx-auto mt-4btn btn-primary" style="align-self: center">Speichern</button>
+    <a th:if="${otherProfile}==false" class="d-grid gap-2 col-2 mx-auto mt-4" href="index" >Go Home</a>
+    <a th:if="${otherProfile}==true" class="d-grid gap-2 col-2 mx-auto mt-4" href="search" >Go Home</a>
 </form>
 </body>
 </html>

@@ -59,8 +59,6 @@ public interface ProfileRepository  extends CrudRepository<Profile, Long> {
     List<Profile> search(byte myGender, Byte attractedToGender,
                          LocalDate minBirthdate, LocalDate maxBirthdate,
                          short minHornlength, short maxHornlength );
-
-
     Optional<Profile> findFirstByOrderByHornlengthDesc();
 
     List<Profile>     findByOrderByHornlengthDesc();
@@ -68,7 +66,6 @@ public interface ProfileRepository  extends CrudRepository<Profile, Long> {
     List<Profile>     findByHornlengthGreaterThan( short min );
 
     List<Profile>     findFirst10ByOrderByLastseenDesc();
-
     int deleteProfileById( long id );
 
 }

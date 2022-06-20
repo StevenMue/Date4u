@@ -12,7 +12,7 @@
             <a class="nav-link nav-item" href="profile">Profile</a>
             <a class="nav-link nav-item" href="search">Search</a>
             <a th:if="anonymousUser == ${loggedIn}" class="nav-link nav-item" href="login">Login</a>
-            <a th:if="anonymousUser != ${loggedIn}" class="nav-link nav-item" href="javascript: document.logoutForm.submit()">Logout</a><!-- Change if user is logged in -->
+            <a th:if="anonymousUser != ${loggedIn}" class="nav-link nav-item" href="javascript: document.logoutForm.submit()">Logout</a>
         </div></div>
     </nav>
     <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
