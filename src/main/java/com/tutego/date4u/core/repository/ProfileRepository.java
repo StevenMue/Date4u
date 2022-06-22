@@ -1,11 +1,11 @@
-package com.tutego.date4u.repository;
+package com.tutego.date4u.core.repository;
 
 
-import com.tutego.date4u.repository.enities.Profile;
+import com.tutego.date4u.core.enities.Profile;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +13,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface ProfileRepository  extends CrudRepository<Profile, Long> {
     @Query( "SELECT p FROM Profile p WHERE p.nickname = :name" )
     Optional<Profile> findProfileByNickname(String name );
@@ -26,6 +27,9 @@ public interface ProfileRepository  extends CrudRepository<Profile, Long> {
     @Modifying
     @Query( "UPDATE Profile p SET p.lastseen =:lastseen WHERE p.id = :id" )
     int updateLastSeen( long id, LocalDateTime lastseen );
+
+    @Query("SELECT p FROM Profile p WHERE p.unicorn.email =:email")
+    Optional<Profile> findProfileByEmail(String email);
 
     @Modifying
     @Query("UPDATE Profile p SET " +

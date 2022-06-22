@@ -1,10 +1,9 @@
-package com.tutego.date4u.dto;
+package com.tutego.date4u.service.formdata;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 public class ProfileFormData {
 
     //TODO make valid classes for each
-    private Long id;
 
     @NotBlank(message = "Nickname cant be blank or null")
     private String nickname;
@@ -38,8 +36,7 @@ public class ProfileFormData {
     public ProfileFormData() {
     }
 
-    public ProfileFormData(Long id, String nickname, LocalDate birthdate, int hornlength, int gender, Integer attractedToGender, String description, LocalDateTime lastseen) {
-        this.id = id;
+    public ProfileFormData(String nickname, LocalDate birthdate, int hornlength, int gender, Integer attractedToGender, String description, LocalDateTime lastseen) {
         this.nickname = nickname;
         this.birthdate = birthdate;
         this.hornlength = hornlength;
@@ -47,14 +44,6 @@ public class ProfileFormData {
         this.attractedToGender = attractedToGender;
         this.description = description;
         this.lastseen = lastseen;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNickname() {
@@ -116,8 +105,7 @@ public class ProfileFormData {
     @Override
     public String toString() {
         return "ProfileFormData{" +
-                "id=" + id +
-                ", nickname='" + nickname + '\'' +
+                "nickname='" + nickname + '\'' +
                 ", birthdate=" + birthdate +
                 ", hornlength=" + hornlength +
                 ", gender=" + gender +

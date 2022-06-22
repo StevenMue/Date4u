@@ -1,4 +1,4 @@
-package com.tutego.date4u.core.controller;
+package com.tutego.date4u.web.controller;
 
 import com.tutego.date4u.Registrations;
 import com.tutego.date4u.Trending;

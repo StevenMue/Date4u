@@ -1,4 +1,4 @@
-package com.tutego.date4u.core.validation;
+package com.tutego.date4u.service.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

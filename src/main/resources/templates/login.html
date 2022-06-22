@@ -54,7 +54,6 @@
                 Email exits already.
             </div>
             <form class="p-3" data-th-object="${unicorn}" data-th-action="@{/regAction}" method="post">
-                <input type="text" data-th-field="*{id}" hidden/>
                 <div class="mb-3">
                     <label for="emailInput" class="form-label">Email</label>
                     <input type="text" data-th-field="*{email}" id="emailInput"

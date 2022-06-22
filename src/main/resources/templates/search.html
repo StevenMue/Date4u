@@ -76,15 +76,18 @@
                    href="javascript: document.logoutForm.submit()">Logout</a>
             </div>
         </div>
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Logout"/>
+        </form>
     </nav>
     <div class="jumbotron">
         <h1 class="display-3 mt-3 mx-3">Search</h1>
     </div>
-    <form id="searchForm" class="mt-4" data-th-object="${filterData}" data-th-action="@{/filter}" method="post">
+    <div id="searchForm" class="mt-4">
         <div class="filter" style="height: 3rem">
             <div class="slidecontainer  d-grid gap-2 mx-auto">
                 <div id="slider-outer-div-year">
-                    <div id="slider-max-label-year" class="bubble" data-th-field="*{startYear}"></div>
+                    <div id="slider-max-label-year" class="bubble"></div>
                     <div id="slider-min-label-year" class="bubble"></div>
                     <div id="slider-div-year">
                         <div>18 Jahre</div>
@@ -128,16 +131,16 @@
         <div class="d-grid gap-2 col-2 mx-auto mt-4">
             <button id="searchButton" type="button" style="font-size: 20px" class="btn btn-primary">Suche</button>
         </div>
-    </form>
+    </div>
 </div>
 <div class="p-2"></div>
 <div id="resultArea">
     <div class="container border border-4" style=" display: flex; justify-content: center; flex-wrap: wrap;">
         <div data-th-each="uni,iterationStatus : ${profile}">
             <div class="profile item rounded p-2 mx-4 my-4 bg-danger">
-                <form th:action="@{'/profile/'+${uni.id}}">
+                <form th:action="@{'/profile/'+${uni.nickname}}">
                     <input type="image" style="width:128px; height: 128px"
-                           th:src="@{'/user(id='+${uni.id}+')/profilePicture'}"
+                           th:src="@{'/user(nickname='+${uni.nickname}+')/profilePicture'}"
                            alt="profile-picture"/>
                     <p data-th-text="'Nick: '+${uni.nickname}">Nickname</p>
                     <p data-th-text="'Alter: '+${uni.birthdate}">Birthdate</p>
@@ -185,11 +188,11 @@
 
     $(function () {
         var data = {
-            startYear: [[${filterData.startYear}]],
-            endYear: [[${filterData.endYear}]],
-            startLength: [[${filterData.startLength}]],
-            endLength: [[${filterData.endLength}]],
-            gender: [[${filterData.gender}]]
+            startYear: 0,
+            endYear: 0,
+            startLength: 0,
+            endLength: 0,
+            gender: 0
         };
         $(".dropdown-menu").on('click', 'a', function () {
             $("#dropdownMenuGenderButton:first-child").text($(this).text());

@@ -1,4 +1,4 @@
-package com.tutego.date4u.repository.enities;
+package com.tutego.date4u.core.enities;
 
 
 

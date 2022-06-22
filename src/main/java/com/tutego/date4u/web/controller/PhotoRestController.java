@@ -1,6 +1,6 @@
-package com.tutego.date4u.core.controller;
+package com.tutego.date4u.web.controller;
 
-import com.tutego.date4u.core.service.PhotoService;
+import com.tutego.date4u.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

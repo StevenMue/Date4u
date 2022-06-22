@@ -1,11 +1,13 @@
-package com.tutego.date4u.repository;
+package com.tutego.date4u.core.repository;
 
-import com.tutego.date4u.repository.enities.Profile;
-import com.tutego.date4u.repository.enities.Unicorn;
+import com.tutego.date4u.core.enities.Profile;
+import com.tutego.date4u.core.enities.Unicorn;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UnicornRepository extends CrudRepository<Unicorn, Long> {
 
     Unicorn getById(long ID);

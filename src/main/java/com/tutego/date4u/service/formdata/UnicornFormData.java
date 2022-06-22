@@ -1,16 +1,14 @@
-package com.tutego.date4u.dto;
+package com.tutego.date4u.service.formdata;
 
-import com.tutego.date4u.core.validation.ValidEmail;
+import com.tutego.date4u.service.validation.ValidEmail;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UnicornFormData {
-    @NotNull
-    @NotEmpty
-    private Long id;
 
-    @ValidEmail
+    @Email
     @NotNull
     @NotEmpty
     private String email;
@@ -23,18 +21,9 @@ public class UnicornFormData {
     public UnicornFormData() {
     }
 
-    public UnicornFormData(Long id, String email, String password) {
-        this.id = id;
+    public UnicornFormData(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -56,8 +45,7 @@ public class UnicornFormData {
     @Override
     public String toString() {
         return "UnicornFormData{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

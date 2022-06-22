@@ -1,7 +1,7 @@
-package com.tutego.date4u.core.service;
+package com.tutego.date4u.service;
 
-import com.tutego.date4u.repository.UnicornRepository;
-import com.tutego.date4u.repository.enities.Unicorn;
+import com.tutego.date4u.core.repository.UnicornRepository;
+import com.tutego.date4u.core.enities.Unicorn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
 import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.transaction.Transactional;
 import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 
