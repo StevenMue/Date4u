@@ -11,56 +11,39 @@ import com.tutego.date4u.core.repository.PhotoRepository;
 import com.tutego.date4u.core.repository.UnicornRepository;
 import com.tutego.date4u.core.enities.Profile;
 import com.tutego.date4u.core.repository.ProfileRepository;
-import com.tutego.date4u.core.enities.Unicorn;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
-import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
 
 
 @Controller
 public class Date4uWebController {
 
     Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    @Autowired
-    UnicornRepository unicornRepository;
     @Autowired
     UnicornService unicornService;
     @Autowired
-    ProfileRepository profiles;
-    @Autowired
     ProfileService profileService;
-    @Autowired
-    PhotoRepository photoRepository;
     @Autowired
     PhotoService photoService;
     @Autowired
     SecurityService securityService;
+
+
 
     @RequestMapping("/*")
     public String indexPage(Model model) {
@@ -69,7 +52,6 @@ public class Date4uWebController {
         return "index";
     }
 
-    //TODO MAYE NEW PROFILE USELESS?
     @RequestMapping("/profile")
     public String profilePage() {
         return profileService.getProfileNicknameByEmail(securityService.getUserName())
@@ -77,7 +59,7 @@ public class Date4uWebController {
                 .orElse("redirect:/profile/newProfile");
     }
 
-    //TODO Registration Test
+    //TODO MAYE NEW PROFILE USELESS?
     @RequestMapping("/profile/newProfile")
     public String newProfilePage(Model model) {
         profileService.getProfileByEmail(securityService.getUserName())
@@ -163,6 +145,7 @@ public class Date4uWebController {
                             model.addAttribute("errorFields", errorFields);
                         }
                     }
+
                     profileService
                             .getProfileWithEmailByEmail(
                                     securityService
@@ -227,6 +210,7 @@ public class Date4uWebController {
         return "login";
     }
 
+    //TODO Registration need testing
     @PostMapping("/regAction")
     public String registration(@ModelAttribute UnicornFormData unicornData) {
         profileService.createNewUser(unicornData);

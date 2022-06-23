@@ -1,26 +1,24 @@
 package com.tutego.date4u.service.formdata;
 
-import com.tutego.date4u.core.enities.Photo;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ProfileEmailFormData extends ProfileFormData{
+public class ProfileFullFormData extends ProfileFormData{
     private String email;
     private List<String> photos;
     private List<String> likesNicknames;
 
-    public ProfileEmailFormData() {
+    public ProfileFullFormData() {
     }
 
-    public ProfileEmailFormData(String email, List<String> photos, List<String> likesNicknames) {
+    public ProfileFullFormData(String email, List<String> photos, List<String> likesNicknames) {
         this.email = email;
         this.photos = photos;
         this.likesNicknames = likesNicknames;
     }
 
-    public ProfileEmailFormData(String nickname, LocalDate birthdate, int hornlength, int gender, Integer attractedToGender, String description, LocalDateTime lastseen, String email, List<String> photos, List<String> likesNicknames) {
+    public ProfileFullFormData(String nickname, LocalDate birthdate, int hornlength, int gender, Integer attractedToGender, String description, LocalDateTime lastseen, String email, List<String> photos, List<String> likesNicknames) {
         super(nickname, birthdate, hornlength, gender, attractedToGender, description, lastseen);
         this.email = email;
         this.photos = photos;

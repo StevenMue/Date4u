@@ -1,6 +1,8 @@
 package com.tutego.date4u.core.enities;
 
 
+
+import org.hibernate.envers.Audited;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -8,8 +10,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Entity
 @Access( AccessType.FIELD )
+@Audited
 public class Profile {
 
     public static final int FEE = 1;

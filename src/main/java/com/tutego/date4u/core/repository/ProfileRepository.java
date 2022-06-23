@@ -2,9 +2,11 @@ package com.tutego.date4u.core.repository;
 
 
 import com.tutego.date4u.core.enities.Profile;
+import com.tutego.date4u.core.enities.Unicorn;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProfileRepository  extends CrudRepository<Profile, Long> {
+public interface ProfileRepository  extends CrudRepository<Profile, Long>, RevisionRepository<Profile, Long, Long> {
     @Query( "SELECT p FROM Profile p WHERE p.nickname = :name" )
     Optional<Profile> findProfileByNickname(String name );
 

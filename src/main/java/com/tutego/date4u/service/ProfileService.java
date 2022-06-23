@@ -6,7 +6,7 @@ import com.tutego.date4u.core.enities.Unicorn;
 import com.tutego.date4u.core.repository.ProfileRepository;
 import com.tutego.date4u.core.enities.Profile;
 import com.tutego.date4u.core.repository.UnicornRepository;
-import com.tutego.date4u.service.formdata.ProfileEmailFormData;
+import com.tutego.date4u.service.formdata.ProfileFullFormData;
 import com.tutego.date4u.service.formdata.ProfileFormData;
 import com.tutego.date4u.service.formdata.UnicornFormData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +44,8 @@ public class ProfileService {
         return Optional.of(formData);
     }
 
-    private Optional<ProfileEmailFormData> transformProfileToFormDataWithEmail(Profile profile) {
-        ProfileEmailFormData formData = new ProfileEmailFormData();
+    private Optional<ProfileFullFormData> transformProfileToFormDataWithEmail(Profile profile) {
+        ProfileFullFormData formData = new ProfileFullFormData();
         formData.setBirthdate(profile.getBirthdate());
         formData.setDescription(profile.getDescription());
         formData.setAttractedToGender(profile.getAttractedToGender());
@@ -72,7 +72,7 @@ public class ProfileService {
                 .flatMap(this::transformProfileToFormData);
     }
 
-    public Optional<ProfileEmailFormData> getProfileWithEmailByEmail(String email) {
+    public Optional<ProfileFullFormData> getProfileWithEmailByEmail(String email) {
         return profileRepository.findProfileByEmail(email)
                 .flatMap(this::transformProfileToFormDataWithEmail);
     }
@@ -82,7 +82,7 @@ public class ProfileService {
                 .flatMap(this::transformProfileToFormData);
     }
 
-    public Optional<ProfileEmailFormData> getProfileWithEmailByNickname(String nickname) {
+    public Optional<ProfileFullFormData> getProfileWithEmailByNickname(String nickname) {
         return profileRepository.findProfileByNickname(nickname)
                 .flatMap(this::transformProfileToFormDataWithEmail);
     }

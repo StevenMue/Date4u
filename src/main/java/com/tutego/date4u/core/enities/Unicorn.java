@@ -3,11 +3,18 @@ package com.tutego.date4u.core.enities;
 
 
 
+
+
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
+
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 
 @Entity
 @Access( AccessType.FIELD )
+@Audited
 public class Unicorn {
 
     @Id

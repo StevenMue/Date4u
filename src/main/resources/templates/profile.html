@@ -31,7 +31,7 @@
          data-th-text="'Profile update error: '+'You must enter a text in NICKNAME. This field can not be empty'">
     </div>
     <div th:if="${#lists.contains(errorFields, 'birthdate')}" class="alert alert-error"
-         data-th-text="'Profile update error: '+'You must enter a valid GEBURTSTAG in form of dd-mm-yy. This field can not be empty'">
+         data-th-text="'Profile update error: '+'You must enter a valid GEBURTSTAG in form of dd-mm-yy. This field can not be empty and u must be over 18 years'">
     </div>
     <div th:if="${#lists.contains(errorFields, 'hornlength')}" class="alert alert-error"
          data-th-text="'Profile update error: '+'You must enter a valid number >=0 in HORNLÄNGE. This field can not be empty'">

@@ -5,10 +5,11 @@ import com.tutego.date4u.core.enities.Unicorn;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UnicornRepository extends CrudRepository<Unicorn, Long> {
+public interface UnicornRepository extends CrudRepository<Unicorn, Long>, RevisionRepository<Unicorn, Long, Long> {
 
     Unicorn getById(long ID);
     Unicorn findUnicornsByEmail(String email);

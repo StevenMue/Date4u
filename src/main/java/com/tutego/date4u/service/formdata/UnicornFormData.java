@@ -1,7 +1,5 @@
 package com.tutego.date4u.service.formdata;
 
-import com.tutego.date4u.service.validation.ValidEmail;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -22,7 +22,7 @@ import java.util.Collection;
 
 //TODO not implemented
 
-public class MyUserDetailsManager implements UserDetailsManager {
+public class UserDetailsService implements UserDetailsManager {
     private AuthenticationManager authenticationManager;
     private UserCache userCache = new NullUserCache();
 
@@ -30,8 +30,8 @@ public class MyUserDetailsManager implements UserDetailsManager {
 
     Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @Autowired
-    public MyUserDetailsManager(UnicornRepository unicornRepository) {
+
+    public UserDetailsService( @Autowired UnicornRepository unicornRepository) {
         this.unicornRepository=unicornRepository;
     }
 
@@ -86,6 +86,7 @@ public class MyUserDetailsManager implements UserDetailsManager {
         if(uni==null){
             throw new UsernameNotFoundException("No unicorn with that email: "+email+" exits.");
         }
+        log.error(uni.getEmail());
         return new User(uni.getEmail(),
                 uni.getPassword(),
         true,

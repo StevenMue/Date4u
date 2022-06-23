@@ -19,13 +19,11 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @ImportResource({"classpath*:applicationContext.xml"})
-@EnableTransactionManagement
 @EntityScan
-@EnableJpaRepositories
 public class Date4uApplication {
 
     public static void main(String[] args) {
-//        Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+       // Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
         ApplicationContext ctx = SpringApplication.run( Date4uApplication.class,
                 args );
 //        Arrays.stream( ctx.getBeanDefinitionNames() )

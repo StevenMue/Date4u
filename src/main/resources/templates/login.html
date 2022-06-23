@@ -20,6 +20,9 @@
             <form name="f" th:action="@{/login}" method="post">
                 <fieldset>
                     <legend>Please Login</legend>
+                    <div th:if="${param.error}" th:each="error: ${param.error}" class="alert alert-error">
+                        <p data-th-text="${error}"></p>
+                    </div>
                     <div th:if="${param.error}" class="alert alert-error">
                         Invalid email and password
                     </div>

@@ -11,8 +11,11 @@ import java.util.Optional;
 @Validated
 public class UnicornService {
 
-    @Autowired
     UnicornRepository unicornRepository;
+
+    public UnicornService(@Autowired UnicornRepository unicornRepository) {
+        this.unicornRepository = unicornRepository;
+    }
 
     public Optional<Unicorn> getProfileByEmail(String email){
         return Optional.ofNullable(unicornRepository.findUnicornsByEmail(email));
